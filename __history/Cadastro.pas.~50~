@@ -1,0 +1,155 @@
+unit Cadastro;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, REST.Types,Data.Bind.Components, Data.Bind.ObjectScope,
+  REST.Client, Vcl.Mask, Data.DB, ZAbstractRODataset,
+  ZAbstractDataset, ZDataset, ZAbstractConnection, ZConnection, ZSqlUpdate,
+  Vcl.DBCtrls, ZAbstractTable, Datasnap.Provider, Datasnap.DBClient,
+  System.Generics.Collections,Tipos, IdBaseComponent, IdMessage, Vcl.AppEvnts;
+
+type
+  TCadastroFrm = class(TForm)
+    CpfLbl: TLabel;
+    NomeLbl: TLabel;
+    TelefoneLbl: TLabel;
+    EmailLbl: TLabel;
+    CepLbl: TLabel;
+    CidadeLbl: TLabel;
+    EstadoLbl: TLabel;
+    BairroLbl: TLabel;
+    NumeroLbl: TLabel;
+    ComplementoLbl: TLabel;
+    SalvarBtn: TButton;
+    LimparBtn: TButton;
+    FecharBtn: TButton;
+    RuaLbl: TLabel;
+    ComplementoMemo: TMemo;
+    CpfEdt: TMaskEdit;
+    TelefoneEdt: TMaskEdit;
+    CepTxt: TMaskEdit;
+    NomeTxt: TEdit;
+    EmailEdt: TEdit;
+    CidadeTxt: TEdit;
+    BairroTxt: TEdit;
+    EstadoTxt: TEdit;
+    RuaEdt: TEdit;
+    NumeroEdt: TEdit;
+    ZQuery1: TZQuery;
+    ApplicationEvents1: TApplicationEvents;
+    procedure CepTxtExit(Sender: TObject);
+    procedure CepTxtEnter(Sender: TObject);
+    procedure LimparBtnClick(Sender: TObject);
+    procedure FecharBtnClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure TelefoneEdtExit(Sender: TObject);
+    procedure TelefoneEdtEnter(Sender: TObject);
+    procedure SalvarBtnClick(Sender: TObject);
+    procedure CpfEdtExit(Sender: TObject);
+    procedure CpfEdtEnter(Sender: TObject);
+    procedure ApplicationEvents1Hint(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  CadastroFrm: TCadastroFrm;
+
+implementation
+
+{$R *.dfm}
+
+uses uEndereco, Procedures, Pacientes, validacoes, funcoes;
+
+procedure TCadastroFrm.ApplicationEvents1Hint(Sender: TObject);
+begin
+TMemo(Self).Lines.Add(Application.hint);
+end;
+
+procedure TCadastroFrm.CepTxtEnter(Sender: TObject);
+begin
+    BairroTxt.Clear();
+    CidadeTxt.Clear();
+    EstadoTxt.Clear();
+    CepTxt.EditMask := '00000-000;1;_';
+
+end;
+
+procedure TCadastroFrm.CepTxtExit(Sender: TObject);
+var
+  _rEndereco: TEndereco;
+begin
+       if CepTxt.Text = EmptyStr then
+    Exit;
+
+  _rEndereco := TEndereco.Create(CepTxt.Text);
+  try
+    BairroTxt.Text := _rEndereco.Bairro;
+    CidadeTxt.Text := _rEndereco.Cidade;
+    EstadoTxt.Text := _rEndereco.UF;
+    RuaEdt.Text := _rEndereco.Logradouro;
+    CepTxt.EditMask := '';
+  finally
+    _rEndereco.Free;
+    _rEndereco := nil;
+  end;
+end;
+
+procedure TCadastroFrm.CpfEdtEnter(Sender: TObject);
+begin
+CpfEdt.EditMask := '000.000.000-00;1;_';
+end;
+
+procedure TCadastroFrm.CpfEdtExit(Sender: TObject);
+begin
+  CpfEdt.EditMask := '';
+end;
+
+procedure TCadastroFrm.FecharBtnClick(Sender: TObject);
+begin
+  fecharForm(TForm(Self));
+end;
+
+procedure TCadastroFrm.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := caFree;
+  CadastroFrm := nil;
+end;
+
+procedure TCadastroFrm.LimparBtnClick(Sender: TObject);
+begin
+  ClearFieldAll(TForm(Self));
+end;
+procedure TCadastroFrm.SalvarBtnClick(Sender: TObject);
+var
+ dados : ArrayOf11;
+ i: integer;
+begin
+  if(campoVazio(TForm(Self))) then
+  begin
+     ShowMessage('Algum Campo Esta vazio, Por favor o prencha');
+  end
+  else
+  begin
+      dados := getParams(TForm(Self));
+      salvarDados(TForm(Self),ZQuery1,dados);
+      ClearFieldAll(TForm(Self));
+  end;
+end;
+
+procedure TCadastroFrm.TelefoneEdtEnter(Sender: TObject);
+begin
+   TelefoneEdt.EditMask := '!\(00\)000000009;1;_';
+end;
+
+procedure TCadastroFrm.TelefoneEdtExit(Sender: TObject);
+begin
+  TelefoneEdt.EditMask := '';
+end;
+
+end.

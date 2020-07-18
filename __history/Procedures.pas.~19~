@@ -1,0 +1,108 @@
+unit Procedures;
+
+interface
+  uses Winapi.Windows, Winapi.Messages, System.SysUtils,System.UITypes,
+  System.Variants,System.Classes, Vcl.Graphics,Vcl.Controls, Vcl.Forms,
+  Vcl.Dialogs, Vcl.StdCtrls,Vcl.Mask,Data.DB, ZAbstractRODataset,
+  ZAbstractDataset, ZDataset, ZAbstractConnection, ZConnection,Vcl.Grids,Vcl.DBGrids;
+
+  procedure ClearFieldAll(AForm: TForm);
+  procedure fecharForm(AForm: TForm);
+  procedure ConsultaInsertDadosTabelaPacientes(
+  AForm: TForm;
+  AQuery: TZquery;
+  ACpf: string;
+  ANome: string;
+  ATelefone: string;
+  AEmail: string;
+  ACep: string;
+  ACidade: string;
+  AEstado: string;
+  ABairro: string;
+  ARua: string;
+  ANumero: string;
+  AComplemento: string
+  );
+implementation
+  {procedure que limpa todos os campo do formulario favor passar TForm(Self)
+  como parametro}
+  procedure ClearFieldAll(AForm: TForm);
+  var
+  i: word;
+  begin
+    with AForm do
+    begin
+       for i := 0 to ComponentCount - 1 do
+       begin
+          if (Components[i] is TEdit) then
+          begin
+            TEdit(Components[i]).Clear;
+          end;
+          if (Components[i] is TMaskEdit) then
+          begin
+            TMaskEdit(Components[i]).Clear;
+          end;
+          if (Components[i] is TMemo) then
+          begin
+            TMemo(Components[i]).Clear;
+          end;
+       end;
+    end;
+  end;
+  {pergunta se quer fechar o form favor passar TForm(Self)
+  como parametro}
+  procedure FecharForm(AForm: TForm);
+  var
+    confirmar: integer;
+  begin
+    with Aform do
+    begin
+      confirmar := MessageDlg('Deseja encerrar ?', mtConfirmation, mbYesNo,0);
+      if(confirmar = mrYes) then
+      begin
+         Aform.Close;
+      end;
+    end;
+
+  end;
+  procedure ConsultaInsertDadosTabelaPacientes(
+  AForm: TForm;
+  AQuery: TZQuery;
+  ACpf: string;
+  ANome: string;
+  ATelefone: string;
+  AEmail: string;
+  ACep: string;
+  ACidade: string;
+  AEstado: string;
+  ABairro: string;
+  ARua: string;
+  ANumero: string;
+  AComplemento: string
+  );
+  var
+    query: string;
+  begin
+
+     try
+       with AForm do
+       begin
+          query := 'INSERT INTO pacientes VALUES(default, '
+          + QuotedStr(ACpf) + ', ' + QuotedStr(ANome) + ', '
+          + QuotedStr(ATelefone) + ', ' + QuotedStr(AEmail) + ', '
+          + QuotedStr(ACep) + ', ' + QuotedStr(ACidade) + ', '
+          + QuotedStr(AEstado) + ', ' + QuotedStr(ABairro) + ', '
+          + QuotedStr(ARua) + ', ' + QuotedStr(ANumero) + ', '
+          + QuotedStr(AComplemento) + ')';
+          AQuery.SQL.Text := query;
+          AQuery.ExecSQL;
+          AQuery.Close;
+          ShowMessage('Cadastro com Sucesso');
+       end;
+    except
+      on E: exception do
+      ShowMessage('Error = ' + E.Message );
+    end;
+  end;
+end.
+

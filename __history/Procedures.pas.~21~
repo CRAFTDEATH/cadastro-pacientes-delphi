@@ -1,0 +1,80 @@
+unit Procedures;
+
+interface
+  uses Winapi.Windows, Winapi.Messages, System.SysUtils,System.UITypes,
+  System.Variants,System.Classes, Vcl.Graphics,Vcl.Controls, Vcl.Forms,
+  Vcl.Dialogs, Vcl.StdCtrls,Vcl.Mask,Data.DB, ZAbstractRODataset,
+  ZAbstractDataset, ZDataset, ZAbstractConnection, ZConnection,Vcl.Grids,Vcl.DBGrids,
+  funcoes;
+  procedure ClearFieldAll(AForm: TForm);
+  procedure fecharForm(AForm: TForm);
+  procedure salvarDados(AForm: TForm;AQuery: TZquery;data: Vetor);
+implementation
+  {procedure que limpa todos os campo do formulario favor passar TForm(Self)
+  como parametro}
+
+  procedure ClearFieldAll(AForm: TForm);
+  var
+  i: word;
+  begin
+    with AForm do
+    begin
+       for i := 0 to ComponentCount - 1 do
+       begin
+          if (Components[i] is TEdit) then
+          begin
+            TEdit(Components[i]).Clear;
+          end;
+          if (Components[i] is TMaskEdit) then
+          begin
+            TMaskEdit(Components[i]).Clear;
+          end;
+          if (Components[i] is TMemo) then
+          begin
+            TMemo(Components[i]).Clear;
+          end;
+       end;
+    end;
+  end;
+  {pergunta se quer fechar o form favor passar TForm(Self)
+  como parametro}
+  procedure FecharForm(AForm: TForm);
+  var
+    confirmar: integer;
+  begin
+    with Aform do
+    begin
+      confirmar := MessageDlg('Deseja encerrar ?', mtConfirmation, mbYesNo,0);
+      if(confirmar = mrYes) then
+      begin
+         Aform.Close;
+      end;
+    end;
+
+  end;
+  procedure salvarDados(AForm: TForm;AQuery: TZQuery;data:Vetor);
+  var
+    query: string;
+  begin
+
+     try
+       with AForm do
+       begin
+          query := 'INSERT INTO pacientes VALUES(default,'+ QuotedStr(data[1])+ ','
+          + QuotedStr(data[2]) + ',' + QuotedStr(data[3])+ ',' + QuotedStr(data[4])+ ','
+          + QuotedStr(data[5]) + ',' + QuotedStr(data[6]) + ',' + QuotedStr(data[7]) +','
+          + QuotedStr(data[8]) + ',' + QuotedStr(data[9]) + ',' + QuotedStr(data[10]) + ','
+           + QuotedStr(data[11])+')';
+
+          AQuery.SQL.Text := query;
+          AQuery.ExecSQL;
+          AQuery.Close;
+          ShowMessage('Cadastro com Sucesso');
+       end;
+    except
+      on E: exception do
+      ShowMessage('Error = ' + E.Message );
+    end;
+  end;
+end.
+

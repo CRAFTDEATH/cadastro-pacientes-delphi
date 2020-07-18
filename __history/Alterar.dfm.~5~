@@ -1,0 +1,279 @@
+object DadosEditarFrm: TDadosEditarFrm
+  Left = 0
+  Top = 0
+  Caption = 'Dados'
+  ClientHeight = 460
+  ClientWidth = 387
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object RuaLbl: TLabel
+    Left = 204
+    Top = 189
+    Width = 19
+    Height = 13
+    Caption = 'Rua'
+  end
+  object ComplementoLbl: TLabel
+    Left = 20
+    Top = 281
+    Width = 69
+    Height = 13
+    Caption = 'Complemento:'
+  end
+  object NumeroLbl: TLabel
+    Left = 20
+    Top = 235
+    Width = 41
+    Height = 13
+    Caption = 'Numero:'
+  end
+  object BairroLbl: TLabel
+    Left = 18
+    Top = 189
+    Width = 32
+    Height = 13
+    Caption = 'Bairro:'
+  end
+  object EstadoLbl: TLabel
+    Left = 204
+    Top = 143
+    Width = 37
+    Height = 13
+    Caption = 'Estado:'
+  end
+  object CidadeLbl: TLabel
+    Left = 20
+    Top = 143
+    Width = 37
+    Height = 13
+    Caption = 'Cidade:'
+  end
+  object CepLbl: TLabel
+    Left = 207
+    Top = 97
+    Width = 23
+    Height = 13
+    Caption = 'Cep:'
+  end
+  object EmailLbl: TLabel
+    Left = 20
+    Top = 97
+    Width = 32
+    Height = 13
+    Caption = 'E-mail:'
+  end
+  object TelefoneLbl: TLabel
+    Left = 206
+    Top = 51
+    Width = 46
+    Height = 13
+    Caption = 'Telefone:'
+  end
+  object NomeLbl: TLabel
+    Left = 18
+    Top = 51
+    Width = 31
+    Height = 13
+    Caption = 'Nome:'
+  end
+  object CpfLbl: TLabel
+    Left = 18
+    Top = 5
+    Width = 24
+    Height = 13
+    Caption = 'Cpf: '
+  end
+  object ComplementoMemo: TMemo
+    Tag = 11
+    Left = 18
+    Top = 300
+    Width = 348
+    Height = 89
+    Lines.Strings = (
+      '')
+    MaxLength = 200
+    TabOrder = 0
+  end
+  object NumeroEdt: TEdit
+    Tag = 10
+    Left = 18
+    Top = 254
+    Width = 348
+    Height = 21
+    MaxLength = 10
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 1
+    TextHint = 'Digite o numero da casa aqui'
+  end
+  object RuaEdt: TEdit
+    Tag = 9
+    Left = 204
+    Top = 208
+    Width = 162
+    Height = 21
+    MaxLength = 50
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+    TextHint = 'Digite a rua aqui'
+  end
+  object EstadoTxt: TEdit
+    Tag = 7
+    Left = 204
+    Top = 162
+    Width = 162
+    Height = 21
+    MaxLength = 2
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 3
+    TextHint = 'Digite estado aqui'
+  end
+  object BairroTxt: TEdit
+    Tag = 8
+    Left = 18
+    Top = 208
+    Width = 171
+    Height = 21
+    MaxLength = 50
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 4
+    TextHint = 'Digite o bairro aqui'
+  end
+  object CidadeTxt: TEdit
+    Tag = 6
+    Left = 18
+    Top = 162
+    Width = 171
+    Height = 21
+    MaxLength = 50
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 5
+    TextHint = 'Digite a cidade aqui'
+  end
+  object EmailEdt: TEdit
+    Tag = 4
+    Left = 18
+    Top = 116
+    Width = 173
+    Height = 21
+    MaxLength = 50
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 6
+    TextHint = 'Digite o E-mail aqui'
+  end
+  object NomeTxt: TEdit
+    Tag = 2
+    Left = 18
+    Top = 70
+    Width = 173
+    Height = 21
+    MaxLength = 40
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 7
+    TextHint = 'Digite o nome aqui'
+  end
+  object CepTxt: TMaskEdit
+    Tag = 5
+    Left = 206
+    Top = 116
+    Width = 160
+    Height = 21
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 8
+    Text = ''
+    TextHint = 'Digite o Cep aqui'
+    OnExit = CepTxtExit
+  end
+  object TelefoneEdt: TMaskEdit
+    Tag = 3
+    Left = 207
+    Top = 70
+    Width = 159
+    Height = 21
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 9
+    Text = ''
+    TextHint = 'Digite telefone aqui'
+    OnEnter = TelefoneEdtEnter
+    OnExit = TelefoneEdtExit
+  end
+  object CpfEdt: TMaskEdit
+    Tag = 1
+    Left = 18
+    Top = 24
+    Width = 348
+    Height = 21
+    Enabled = False
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 10
+    Text = ''
+    TextHint = 'Digite o CPF aqui'
+    OnClick = CpfEdtClick
+    OnExit = CpfEdtExit
+  end
+  object FecharBtn: TButton
+    Left = 116
+    Top = 406
+    Width = 75
+    Height = 25
+    Caption = 'Fechar'
+    TabOrder = 11
+    OnClick = FecharBtnClick
+  end
+  object EditarBtn: TButton
+    Left = 18
+    Top = 406
+    Width = 75
+    Height = 25
+    Caption = 'Editar'
+    TabOrder = 12
+    OnClick = EditarBtnClick
+  end
+  object IdEdt: TEdit
+    Left = 245
+    Top = 412
+    Width = 121
+    Height = 21
+    TabOrder = 13
+    Visible = False
+  end
+  object ZQuery2: TZQuery
+    Connection = ZConnection2
+    Params = <>
+    Left = 200
+    Top = 464
+  end
+  object ZConnection2: TZConnection
+    ControlsCodePage = cCP_UTF16
+    AutoEncodeStrings = True
+    Catalog = ''
+    Connected = True
+    HostName = 'localhost'
+    Port = 0
+    Database = 'sus'
+    User = 'postgres'
+    Password = '000000'
+    Protocol = 'postgresql'
+    LibraryLocation = 'C:\Program Files (x86)\PostgreSQL\9.6\bin\libpq.dll'
+    Left = 128
+    Top = 464
+  end
+end

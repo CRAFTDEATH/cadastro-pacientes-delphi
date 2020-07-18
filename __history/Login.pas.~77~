@@ -1,0 +1,86 @@
+unit Login;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, Vcl.Imaging.jpeg,Vcl.ExtCtrls;
+
+type
+  TSusFrm = class(TForm)
+    UserTxt: TEdit;
+    SenhaTxt: TEdit;
+    UserLbl: TLabel;
+    SenhaLbl: TLabel;
+    EntrarBtn: TButton;
+    CadeadoImg: TImage;
+    ClearBtn: TButton;
+    FecharBtn: TButton;
+    procedure EntrarBtnClick(Sender: TObject);
+    procedure ClearBtnClick(Sender: TObject);
+    procedure FecharBtnClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  SusFrm: TSusFrm;
+
+implementation
+
+{$R *.dfm}
+
+uses Pacientes, Procedures, funcoes;
+
+procedure TSusFrm.ClearBtnClick(Sender: TObject);
+begin
+  ClearFieldAll(TForm(Self));
+end;
+
+procedure TSusFrm.EntrarBtnClick(Sender: TObject);
+var
+  FUsuario: string;
+  FSenha: string;
+begin
+
+         FUsuario := UserTxt.Text;
+         FSenha := SenhaTxt.Text;
+         if Autenticar(ZQuery,TForm(Self),FUsuario,FSenha) then
+         begin
+
+            TForm(Self).Close;
+            PacientesFrm.Show;
+
+         end
+         else
+         begin
+            ShowMessage('Usuario ou Senha Invalidos');
+         end;
+
+
+
+end;
+
+procedure TSusFrm.FecharBtnClick(Sender: TObject);
+begin
+
+  fecharForm(TForm(Self));
+  Application.Terminate;
+
+
+end;
+
+procedure TSusFrm.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := caFree;
+  SusFrm := nil;
+
+end;
+
+end.
+
+

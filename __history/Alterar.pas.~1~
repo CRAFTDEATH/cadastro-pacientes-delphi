@@ -1,0 +1,49 @@
+unit Alterar;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask;
+
+type
+  TDadosEditarFrm = class(TForm)
+    ComplementoMemo: TMemo;
+    NumeroEdt: TEdit;
+    RuaEdt: TEdit;
+    EstadoTxt: TEdit;
+    BairroTxt: TEdit;
+    CidadeTxt: TEdit;
+    EmailEdt: TEdit;
+    NomeTxt: TEdit;
+    CepTxt: TMaskEdit;
+    TelefoneEdt: TMaskEdit;
+    CpfEdt: TMaskEdit;
+    FecharBtn: TButton;
+    LimparBtn: TButton;
+    SalvarBtn: TButton;
+    RuaLbl: TLabel;
+    ComplementoLbl: TLabel;
+    NumeroLbl: TLabel;
+    BairroLbl: TLabel;
+    EstadoLbl: TLabel;
+    CidadeLbl: TLabel;
+    CepLbl: TLabel;
+    EmailLbl: TLabel;
+    TelefoneLbl: TLabel;
+    NomeLbl: TLabel;
+    CpfLbl: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DadosEditarFrm: TDadosEditarFrm;
+
+implementation
+
+{$R *.dfm}
+
+end.

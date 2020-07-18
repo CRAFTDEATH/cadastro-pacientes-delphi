@@ -1,0 +1,8 @@
+unit Tipos;
+
+interface
+ uses System.SysUtils;
+ type ArrayOf11 = array [1..11] of string;
+implementation
+
+end.

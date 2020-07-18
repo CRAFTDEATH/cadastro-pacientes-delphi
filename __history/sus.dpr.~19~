@@ -1,0 +1,20 @@
+program sus;
+
+uses
+  Vcl.Forms,
+  Login in 'Login.pas' {SusFrm},
+  Pacientes in 'Pacientes.pas' {PacientesFrm},
+  Cadastro in 'Cadastro.pas' {CadastroFrm},
+  Procedures in 'Procedures.pas',
+  funcoes in 'funcoes.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TPacientesFrm, PacientesFrm);
+  Application.CreateForm(TSusFrm, SusFrm);
+  Application.ShowMainForm := false;
+  Application.Run;
+end.

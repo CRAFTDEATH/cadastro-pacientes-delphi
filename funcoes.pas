@@ -1,0 +1,84 @@
+unit funcoes;
+
+interface
+  uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, Vcl.Imaging.jpeg,Vcl.ExtCtrls, Data.DB, ZAbstractRODataset,
+  ZAbstractDataset, ZDataset, ZAbstractConnection, ZConnection,
+  System.Generics.Collections,Vcl.Mask,Tipos;
+
+  type
+      Vetor =  array[1..11] of string;
+  function autenticar(
+    Query: TZquery;
+    AForm: TForm;
+    AUsuario: string;
+    ASenha: string
+  ) : boolean;
+  function getParams(AForm : TForm) : ArrayOf11;
+implementation
+
+
+      //função do login
+  function autenticar(
+    Query: TZquery;
+    AForm: TForm;
+    AUsuario: string;
+    ASenha: string
+  ) : boolean;
+  var
+    Usuario: string;
+    Senha: string;
+  begin
+     with AForm do
+     begin
+
+         Query.SQL.Text :=
+         'SELECT usuarios.usuario, usuarios.senha FROM usuarios' + ' WHERE '
+         + 'usuarios.usuario' + ' = ' + QuotedStr(AUsuario) + ' AND ' + 'usuarios.senha'
+         + ' = ' + QuotedStr(ASenha);
+         Query.Open;
+         Usuario := Query.FieldByName('usuario').AsString;
+         Senha := Query.FieldByName('senha').AsString;
+         Query.Close;
+         if AUsuario.Equals(Usuario) AND ASenha.Equals(Senha) then
+         begin
+          Result := true;
+         end
+         else
+         begin
+            Result:= false;
+         end;
+     end;
+  end;
+  //essa função obtem todos os campos do formulario de cadastro
+  function getParams(AForm : TForm) : ArrayOf11;
+  var
+    data: ArrayOf11;
+    i: integer;
+  begin
+    with AForm do
+    begin
+
+       for i := 0 to ComponentCount - 1 do
+       begin
+          if (Components[i] is TEdit) then
+          begin
+            data[TEdit(Components[i]).Tag] := TEdit(Components[i]).Text;
+          end;
+          if (Components[i] is TMaskEdit) then
+          begin
+            data[TMaskEdit(Components[i]).Tag] := TMaskEdit(Components[i]).Text;
+          end;
+          if (Components[i] is TMemo) then
+          begin
+
+            data[TMemo(Components[i]).Tag] := TMemo(Components[i]).Lines.Text;
+          end;
+       end;
+       Result := data;
+    end;
+  end;
+
+end.
